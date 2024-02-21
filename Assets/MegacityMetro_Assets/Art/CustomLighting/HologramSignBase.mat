@@ -70,6 +70,6 @@ Material:
     - _Plax: {r: 64, g: 64, b: 0, a: 0}
     - _ScanlineFrequency: {r: 1, g: 36, b: 0, a: 0}
     - _ScanlineIntensityRange: {r: 0.9, g: 1.4, b: 0, a: 0}
-    - _Time16: {r: 6.8054285, g: 6.8054285, b: 6.8054285, a: 6.8054285}
+    - _Time16: {r: 7.3826447, g: 15.382645, b: 15.382645, a: 15.382645}
     - _Vector2: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
