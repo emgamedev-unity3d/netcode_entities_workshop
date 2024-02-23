@@ -8,8 +8,10 @@ public class PlayerShipAuthoring : MonoBehaviour
     {
         public override void Bake(PlayerShipAuthoring authoring)
         {
+            var playerShipEntity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);
+
             PlayerShip component = default(PlayerShip);
-            AddComponent(component);
+            AddComponent(playerShipEntity, component);
         }
     }
 }

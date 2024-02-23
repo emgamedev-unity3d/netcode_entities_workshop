@@ -13,10 +13,10 @@ public partial struct PlayerShipInputSystem : ISystem
         //bool down = m_keyboard.sKey.isPressed ||m_keyboard.downArrowKey.isPressed;
         //bool up = m_keyboard.wKey.isPressed || m_keyboard.upArrowKey.isPressed;
 
-        bool left = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);// Input.GetKey("left");
-        bool right = Input.GetKey(KeyCode.RightArrow);
-        bool down = Input.GetKey(KeyCode.DownArrow);
-        bool up = Input.GetKey(KeyCode.UpArrow);
+        bool left = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
+        bool right = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
+        bool down = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+        bool up = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
 
         bool isQkeyPressed = Input.GetKey(KeyCode.Q);
         bool isEkeyPressed = Input.GetKey(KeyCode.E);
@@ -41,7 +41,6 @@ public partial struct PlayerShipInputSystem : ISystem
             if(isQkeyPressed)
             {
                 playerInput.ValueRW.rotationInput -= 1;
-                Debug.Log("Pressing Q!");
             }
             if (isEkeyPressed)
             {

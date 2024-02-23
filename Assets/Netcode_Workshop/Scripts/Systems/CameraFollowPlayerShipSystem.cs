@@ -1,30 +1,60 @@
-﻿using Unity.Entities;
+﻿using Unity.Burst;
+using Unity.Entities;
 using Unity.Mathematics;
+using Unity.MegacityMetro.CameraManagement;
 using Unity.NetCode;
 using Unity.Transforms;
 
-[WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
+[BurstCompile]
+[UpdateAfter(typeof(TransformSystemGroup))]
+[WorldSystemFilter(WorldSystemFilterFlags.LocalSimulation |
+       WorldSystemFilterFlags.ClientSimulation)]
 public partial struct CameraFollowPlayerShipSystem : ISystem
 {
     public static readonly float3 k_cameraPositionOffset = new(0f, 10f, -15f);
 
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<NetworkStreamInGame>();
-
         state.RequireForUpdate<PlayerShip>();
     }
 
     public void OnUpdate(ref SystemState state)
     {
-        var camera = UnityEngine.Camera.main;
+        var deltaTime = SystemAPI.Time.DeltaTime;
+        ComponentLookup<LocalToWorld> localToWorldLookup =
+            SystemAPI.GetComponentLookup<LocalToWorld>(true);
 
-        foreach (var (localToWorld, cube) in 
-            SystemAPI.Query< RefRO<LocalToWorld>, RefRO<PlayerShip> >()
-                .WithAll<GhostOwnerIsLocal>())
+        foreach (var (localToWorld, localTransform, playerShip) in 
+            SystemAPI.Query<
+                RefRO<LocalToWorld>,
+                RefRO<LocalTransform>,
+                RefRO<PlayerShip> >()
+                    .WithAll<GhostOwnerIsLocal>())
         {
-            camera.transform.position = 
+            if (!HybridCameraManager.Instance.WasInitialized)
+            {
+                HybridCameraManager.Instance.PlaceCamera(
+                    localTransform.ValueRO.Position,
+                    localTransform.ValueRO.Rotation);
+
+                HybridCameraManager.Instance.WasInitialized = true;
+            }
+
+            var targetPosition =
                 localToWorld.ValueRO.Position + k_cameraPositionOffset;
+
+            HybridCameraManager.Instance.SetPlayerTargetPosition(targetPosition);
+
+            HybridCameraManager.Instance.UpdateAimCameraTargetPosition(localToWorld.ValueRO.Position);
+
+            //HybridCameraManager.Instance.UpdateAimCameraTargetPosition(
+            //    laser.ValueRO.CalculateLaserEndPoint(
+            //    localToWorld.ValueRO.Position,
+            //    localToWorld.ValueRO.Rotation,
+            //    ref localToWorldLookup,
+            //    true));
+
+            HybridCameraManager.Instance.CameraUpdate(deltaTime);
         }
     }
 }

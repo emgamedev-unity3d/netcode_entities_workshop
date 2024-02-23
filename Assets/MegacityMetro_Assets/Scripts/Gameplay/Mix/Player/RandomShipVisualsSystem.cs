@@ -43,13 +43,13 @@ public partial struct RandomShipVisualsSystem : ISystem
         
         foreach (var (shipVisuals, rootEntity, entity) in SystemAPI.Query<ShipVisuals, RootEntity>().WithEntityAccess())
         {
-            VehicleLaser vehicleLaser = SystemAPI.GetComponent<VehicleLaser>(rootEntity.Entity);
-            vehicleLaser.LocalLaserStartPoint = shipVisuals.LocalLaserStartPoint;
-            SystemAPI.SetComponent(rootEntity.Entity, vehicleLaser);
-            
-            PlayerVehicleSettings vehicleSettings = SystemAPI.GetComponent<PlayerVehicleSettings>(rootEntity.Entity);
-            vehicleSettings.VehicleFX = shipVisuals.FXEntity;
-            SystemAPI.SetComponent(rootEntity.Entity, vehicleSettings);
+            //VehicleLaser vehicleLaser = SystemAPI.GetComponent<VehicleLaser>(rootEntity.Entity);
+            //vehicleLaser.LocalLaserStartPoint = shipVisuals.LocalLaserStartPoint;
+            //SystemAPI.SetComponent(rootEntity.Entity, vehicleLaser);
+            //
+            //PlayerVehicleSettings vehicleSettings = SystemAPI.GetComponent<PlayerVehicleSettings>(rootEntity.Entity);
+            //vehicleSettings.VehicleFX = shipVisuals.FXEntity;
+            //SystemAPI.SetComponent(rootEntity.Entity, vehicleSettings);
 
             ecb.RemoveComponent<ShipVisuals>(entity);
             ecb.RemoveComponent<RootEntity>(entity);

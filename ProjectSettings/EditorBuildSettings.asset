@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/MegacityMetro_Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Netcode_Workshop/Scenes/Workshop_Start.unity
+    guid: 7b2110abdc3b2474f94154a65e3655b8
   m_configObjects: {}

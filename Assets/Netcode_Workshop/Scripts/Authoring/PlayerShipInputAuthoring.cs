@@ -7,7 +7,11 @@ public class PlayerShipInputAuthoring : MonoBehaviour
     {
         public override void Bake(PlayerShipInputAuthoring authoring)
         {
-            AddComponent<PlayerShipInput>();
+            var playerShipEntity = GetEntity(
+                    authoring.gameObject,
+                    Unity.Entities.TransformUsageFlags.Dynamic);
+
+            AddComponent(playerShipEntity, new PlayerShipInput());
         }
     }
 }
